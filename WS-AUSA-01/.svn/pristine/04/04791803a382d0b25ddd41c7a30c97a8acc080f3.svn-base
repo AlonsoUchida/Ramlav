@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
+using System.Reflection;
+
+namespace MvcAppRest.Controllers
+{
+    //[Authorize]
+    public class OrdenesController : Controller
+    {
+        //
+        // GET: /Ordenes/ x
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // /Ordenes/detalle/373306
+        public ActionResult detalle(int id)
+        {
+            DataTable dt = new DataTable();
+            ActionResult resultado = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AUSACnn"].ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand("PA_MOV_CLIENTE_DESPACHO", con))
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    cmd.Parameters.Add(new SqlParameter("@orden", id));
+                    cmd.Parameters.Add(new SqlParameter("@referencia", ""));
+
+                    da.Fill(dt);
+                    List<ImportacionExportacion> _importacionExportacion = Helper.DataTableToList<ImportacionExportacion>(dt);
+                    List<Importacion> _importacion = Helper.DataTableToList<Importacion>(dt);
+                    List<Exportacion> _exportacion = Helper.DataTableToList<Exportacion>(dt);
+
+
+                    Dictionary<string, string> _columnDictionary = new Dictionary<string, string>();
+                    if (_importacion[0].Apertura != null)
+                    {
+                        foreach (var prop in _importacion[0].GetType().GetProperties())
+                        {
+                            _columnDictionary.Add(prop.Name, prop.GetValue(_importacion[0], null) as string);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var prop in _exportacion[0].GetType().GetProperties())
+                        {
+                            _columnDictionary.Add(prop.Name, prop.GetValue(_exportacion[0], null) as string);
+                        }
+                    }
+
+                    List<KeyValuePair<string, string>> myList = _columnDictionary.ToList();
+
+                    myList.Sort((x, y) =>
+                        {
+                            return y.Value.CompareTo(x.Value); //Descending order y -> x // Ascending order x -> 
+                        }
+                    );
+
+                    {
+                        PropertyInfo[] myProperties = _importacionExportacion[0].GetType().GetProperties();
+
+                        int i = 8;
+                        foreach (var item in myList)
+                        {
+                            String property = String.Format("{0} | {1}", item.Key, item.Value);
+                            myProperties[i].SetValue(_importacionExportacion[0], property, null);
+                            i++;
+                        }
+
+                        List<Column> columnas = new List<Column>();
+                        foreach (var item in myProperties)
+                        {
+                            Column column = new Column();
+                            column.Nombre = item.Name as string;
+                            column.Valor = item.GetValue(_importacionExportacion[0], null) as string;
+                            columnas.Add(column);
+                        }
+
+                        resultado = Json(columnas, JsonRequestBehavior.AllowGet);
+                    }
+
+
+                    
+                    return resultado;
+                }
+            }
+        }
+
+        // /Ordenes/valor?fecha=2015&id=027290&cliente=288
+        public String valor(string fecha, string id, string cliente)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AUSACnn"].ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand("PA_MOV_ORDEN_ID", con))
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    cmd.Parameters.Add(new SqlParameter("@anio", fecha));
+                    cmd.Parameters.Add(new SqlParameter("@numero", id));
+                    cmd.Parameters.Add(new SqlParameter("@cliente", cliente));
+
+                    da.Fill(dt);
+                    return Serialization(dt);
+                }
+            }
+        }
+
+        // /Ordenes/valorA?fecha=2015&id=027290
+        public String valorA(string fecha, string id)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AUSACnn"].ToString()))
+            {
+                using (SqlCommand cmd = new SqlCommand("PA_MOV_ORDEN_ID_AUSA", con))
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    cmd.Parameters.Add(new SqlParameter("@anio", fecha));
+                    cmd.Parameters.Add(new SqlParameter("@numero", id));
+
+                    da.Fill(dt);
+                    return Serialization(dt);
+                }
+            }
+        }
+
+        private String Serialization(DataTable dt)
+        {
+            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+            return serializer.Serialize(rows);
+        }
+        
+    }
+}

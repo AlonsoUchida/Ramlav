@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="AppBonus" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlns="AppBonus" xmlns:tns1="AppBonus" name="wslisdep" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:complexType name="Lisdep">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Lisdep.LisdepItem" type="tns1:Lisdep.LisdepItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Lisdep.LisdepItem">
+        <xsd:all>
+          <xsd:element name="DptoCod" type="xsd:string" />
+          <xsd:element name="DptoDes" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="wslisdep.Execute">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wslisdep.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Lista" type="tns1:Lisdep" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wslisdep.ExecuteSoapIn">
+    <part name="parameters" element="tns1:wslisdep.Execute" />
+  </message>
+  <message name="wslisdep.ExecuteSoapOut">
+    <part name="parameters" element="tns1:wslisdep.ExecuteResponse" />
+  </message>
+  <portType name="wslisdepSoapPort">
+    <operation name="Execute">
+      <input message="tns1:wslisdep.ExecuteSoapIn" />
+      <output message="tns1:wslisdep.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wslisdepSoapBinding" type="tns1:wslisdepSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSLISDEP.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wslisdep">
+    <port name="wslisdepSoapPort" binding="tns1:wslisdepSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awslisdep" />
+    </port>
+  </service>
+</definitions>

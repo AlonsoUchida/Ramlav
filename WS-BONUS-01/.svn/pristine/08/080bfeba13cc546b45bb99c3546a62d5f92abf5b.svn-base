@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=301879
+  -->
+<configuration>
+  <!--<configSections>-->
+    <!--<section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />-->
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+  <!--</configSections>-->
+  <connectionStrings>
+    <add name="WebApiDbEntities" connectionString="metadata=res://*/WebApiDbContext.csdl|res://*/WebApiDbContext.ssdl|res://*/WebApiDbContext.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.\SQLEXPRESS;initial catalog=WebApiDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="AuthTokenExpiry" value="900" />
+  </appSettings>
+  <system.web>
+    <authentication mode="None" />
+    <compilation targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+  </system.web>
+  <system.webServer>
+    <modules>
+      <remove name="FormsAuthentication" />
+    </modules>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="EntityFramework" publicKeyToken="B77A5C561934E089" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.0.0.0" newVersion="5.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <!--<entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>-->
+  <system.codedom>
+    <compilers>
+      <compiler language="c#;cs;csharp" extension=".cs" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:6 /nowarn:1659;1699;1701" />
+    </compilers>
+  </system.codedom>
+
+
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="wslogusugxSoapBinding" />
+        <binding name="wslistipdoSoapBinding" />
+        <binding name="wslisdisSoapBinding" />
+        <binding name="wslisproSoapBinding" />
+        <binding name="wslisdepSoapBinding" />
+        <binding name="wsinstokenSoapBinding" />
+        <binding name="wsobttokenSoapBinding" />
+        <binding name="wselitokenSoapBinding" />
+        <binding name="wselitokusSoapBinding" />
+        <binding name="wsacttokenSoapBinding" />
+        <binding name="wsobtcotokSoapBinding" />
+        <binding name="wsobtctousSoapBinding" />
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awslogusugx"
+          binding="basicHttpBinding" bindingConfiguration="wslogusugxSoapBinding"
+          contract="WsBonusLogin.wslogusugxSoapPort" name="wslogusugxSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awslistipdo"
+          binding="basicHttpBinding" bindingConfiguration="wslistipdoSoapBinding"
+          contract="WsBonusDocumentos.wslistipdoSoapPort" name="wslistipdoSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awslisdis"
+          binding="basicHttpBinding" bindingConfiguration="wslisdisSoapBinding"
+          contract="WsBonusDistritos.wslisdisSoapPort" name="wslisdisSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awslispro"
+          binding="basicHttpBinding" bindingConfiguration="wslisproSoapBinding"
+          contract="WsBonusProvincias.wslisproSoapPort" name="wslisproSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awslisdep"
+          binding="basicHttpBinding" bindingConfiguration="wslisdepSoapBinding"
+          contract="WsBonusDepartamentos.wslisdepSoapPort" name="wslisdepSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awsinstoken"
+          binding="basicHttpBinding" bindingConfiguration="wsinstokenSoapBinding"
+          contract="WsBonusInsertarToken.wsinstokenSoapPort" name="wsinstokenSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awsobttoken"
+          binding="basicHttpBinding" bindingConfiguration="wsobttokenSoapBinding"
+          contract="WsBonusObtenerToken.wsobttokenSoapPort" name="wsobttokenSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awselitoken"
+          binding="basicHttpBinding" bindingConfiguration="wselitokenSoapBinding"
+          contract="WsBonusEliminarToken.wselitokenSoapPort" name="wselitokenSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awselitokus"
+          binding="basicHttpBinding" bindingConfiguration="wselitokusSoapBinding"
+          contract="WsBonusEliminarTokenPorUsuario.wselitokusSoapPort"
+          name="wselitokusSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awsacttoken"
+          binding="basicHttpBinding" bindingConfiguration="wsacttokenSoapBinding"
+          contract="WsBonusActualizarToken.wsacttokenSoapPort" name="wsacttokenSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awsobtcotok"
+          binding="basicHttpBinding" bindingConfiguration="wsobtcotokSoapBinding"
+          contract="WsBonusObtenerCountToken.wsobtcotokSoapPort" name="wsobtcotokSoapPort" />
+      <endpoint address="http://200.62.147.188:8080/app/servlet/awsobtctous"
+          binding="basicHttpBinding" bindingConfiguration="wsobtctousSoapBinding"
+          contract="WsBonusObtenerCountTokenPorUsuario.wsobtctousSoapPort"
+          name="wsobtctousSoapPort" />
+    </client>
+  </system.serviceModel>
+  
+</configuration>

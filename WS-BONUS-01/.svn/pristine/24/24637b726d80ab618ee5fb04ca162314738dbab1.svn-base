@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="AppBonus" xmlns:wsdlns="AppBonus" name="wsobtcotok" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:element name="wsobtcotok.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Authtoken" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wsobtcotok.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Count" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Coderror" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Msjerror" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wsobtcotok.ExecuteSoapIn">
+    <part name="parameters" element="wsdlns:wsobtcotok.Execute" />
+  </message>
+  <message name="wsobtcotok.ExecuteSoapOut">
+    <part name="parameters" element="wsdlns:wsobtcotok.ExecuteResponse" />
+  </message>
+  <portType name="wsobtcotokSoapPort">
+    <operation name="Execute">
+      <input message="wsdlns:wsobtcotok.ExecuteSoapIn" />
+      <output message="wsdlns:wsobtcotok.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wsobtcotokSoapBinding" type="wsdlns:wsobtcotokSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSOBTCOTOK.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wsobtcotok">
+    <port name="wsobtcotokSoapPort" binding="wsdlns:wsobtcotokSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awsobtcotok" />
+    </port>
+  </service>
+</definitions>

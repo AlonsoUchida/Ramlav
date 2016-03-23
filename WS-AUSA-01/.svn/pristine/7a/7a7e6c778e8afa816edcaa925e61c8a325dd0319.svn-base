@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ausades01//SVU//" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ausades01//SVU//" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ausades01//SVU//">
+      <s:element name="nuevaAutenticacion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="nuevaAutenticacionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nuevaAutenticacionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="devolverCateraClientes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="devolverCateraClientesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="devolverCateraClientesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="devolverRoles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="usr" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="devolverRolesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="devolverRolesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="nuevaAutenticacionSoapIn">
+    <wsdl:part name="parameters" element="tns:nuevaAutenticacion" />
+  </wsdl:message>
+  <wsdl:message name="nuevaAutenticacionSoapOut">
+    <wsdl:part name="parameters" element="tns:nuevaAutenticacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="devolverCateraClientesSoapIn">
+    <wsdl:part name="parameters" element="tns:devolverCateraClientes" />
+  </wsdl:message>
+  <wsdl:message name="devolverCateraClientesSoapOut">
+    <wsdl:part name="parameters" element="tns:devolverCateraClientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="devolverRolesSoapIn">
+    <wsdl:part name="parameters" element="tns:devolverRoles" />
+  </wsdl:message>
+  <wsdl:message name="devolverRolesSoapOut">
+    <wsdl:part name="parameters" element="tns:devolverRolesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WS_SVUSoap">
+    <wsdl:operation name="nuevaAutenticacion">
+      <wsdl:input message="tns:nuevaAutenticacionSoapIn" />
+      <wsdl:output message="tns:nuevaAutenticacionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="devolverCateraClientes">
+      <wsdl:input message="tns:devolverCateraClientesSoapIn" />
+      <wsdl:output message="tns:devolverCateraClientesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="devolverRoles">
+      <wsdl:input message="tns:devolverRolesSoapIn" />
+      <wsdl:output message="tns:devolverRolesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WS_SVUSoap" type="tns:WS_SVUSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="nuevaAutenticacion">
+      <soap:operation soapAction="http://ausades01//SVU//nuevaAutenticacion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="devolverCateraClientes">
+      <soap:operation soapAction="http://ausades01//SVU//devolverCateraClientes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="devolverRoles">
+      <soap:operation soapAction="http://ausades01//SVU//devolverRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WS_SVUSoap12" type="tns:WS_SVUSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="nuevaAutenticacion">
+      <soap12:operation soapAction="http://ausades01//SVU//nuevaAutenticacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="devolverCateraClientes">
+      <soap12:operation soapAction="http://ausades01//SVU//devolverCateraClientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="devolverRoles">
+      <soap12:operation soapAction="http://ausades01//SVU//devolverRoles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WS_SVU">
+    <wsdl:port name="WS_SVUSoap" binding="tns:WS_SVUSoap">
+      <soap:address location="http://www.ausa.com.pe/WS_SVU/ws_svu.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WS_SVUSoap12" binding="tns:WS_SVUSoap12">
+      <soap12:address location="http://www.ausa.com.pe/WS_SVU/ws_svu.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

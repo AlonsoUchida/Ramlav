@@ -1,0 +1,10 @@
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\bin\Release\Bonus.BusinessEntities.dll
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\bin\Release\Bonus.BusinessEntities.pdb
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.csprojResolveAssemblyReference.cache
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.dll
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.pdb
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\bin\Release\Bonus.BusinessEntities.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\bin\Release\Bonus.BusinessEntities.pdb
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.csprojResolveAssemblyReference.cache
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.BusinessEntities\obj\Release\Bonus.BusinessEntities.pdb

@@ -1,0 +1,10 @@
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Debug\Bonus.Common.dll
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Debug\Bonus.Common.pdb
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.csprojResolveAssemblyReference.cache
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.dll
+F:\Proyectos\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.pdb
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Debug\Bonus.Common.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Debug\Bonus.Common.pdb
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.csprojResolveAssemblyReference.cache
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Debug\Bonus.Common.pdb

@@ -1,0 +1,39 @@
+﻿using System.Net.Http;
+using System.Web.Http;
+using Bonus.BusinessServices.Interfaces;
+
+namespace Bonus.WebApi.Controllers
+{
+    public class LoginController : ApiController
+    {
+        #region Private variable.
+
+        private readonly ILoginServices _loginServices;
+
+        #endregion
+
+        #region Public Constructor
+
+        /// <summary>
+        /// Public constructor to initialize product service instance
+        /// </summary>
+        public LoginController(ILoginServices loginServices)
+        {
+            _loginServices = loginServices;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Login user and returns message of confirmation.
+        /// </summary>
+        /// <returns></returns>
+        [Route("login")]
+        [HttpPost]
+        public string Login(string usuario, string password)
+        {
+            int response = _loginServices.Login(usuario, password);
+            return response.ToString();
+        }
+    }
+}

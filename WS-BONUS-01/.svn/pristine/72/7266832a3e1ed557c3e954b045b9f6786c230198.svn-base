@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="AppBonus" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlns="AppBonus" xmlns:tns1="AppBonus" name="wslisctapt" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:complexType name="Lisctapto">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Lisctapto.LisctaptoItem" type="tns1:Lisctapto.LisctaptoItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Lisctapto.LisctaptoItem">
+        <xsd:all>
+          <xsd:element name="CtaPrsCod" type="xsd:string" />
+          <xsd:element name="CtaCod" type="xsd:short" />
+          <xsd:element name="CtaPrsNom" type="xsd:string" />
+          <xsd:element name="PCtaAsoCod" type="xsd:string" />
+          <xsd:element name="CtaAsoNom" type="xsd:string" />
+          <xsd:element name="PCtaTip" type="xsd:string" />
+          <xsd:element name="PCtaAutCnj" type="xsd:string" />
+          <xsd:element name="TipPunCod" type="xsd:short" />
+          <xsd:element name="CtaSalVig" type="xsd:double" />
+          <xsd:element name="CtaSalCon" type="xsd:double" />
+          <xsd:element name="CtaSalDsp" type="xsd:double" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="wslisctapt.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Ctaprscod" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wslisctapt.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Coderror" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Msjerror" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Carritocta" type="tns1:Lisctapto" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wslisctapt.ExecuteSoapIn">
+    <part name="parameters" element="tns1:wslisctapt.Execute" />
+  </message>
+  <message name="wslisctapt.ExecuteSoapOut">
+    <part name="parameters" element="tns1:wslisctapt.ExecuteResponse" />
+  </message>
+  <portType name="wslisctaptSoapPort">
+    <operation name="Execute">
+      <input message="tns1:wslisctapt.ExecuteSoapIn" />
+      <output message="tns1:wslisctapt.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wslisctaptSoapBinding" type="tns1:wslisctaptSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSLISCTAPT.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wslisctapt">
+    <port name="wslisctaptSoapPort" binding="tns1:wslisctaptSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awslisctapt" />
+    </port>
+  </service>
+</definitions>

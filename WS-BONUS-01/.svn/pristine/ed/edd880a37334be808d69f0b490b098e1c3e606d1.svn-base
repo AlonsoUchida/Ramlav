@@ -1,0 +1,111 @@
+﻿using Bonus.BusinessEntities.DTO;
+using Bonus.BusinessServices.Interfaces;
+using Bonus.DataModel;
+using Bonus.DataModel.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Bonus.BusinessServices.Providers
+{
+    public class TokenServices : ITokenServices
+    {
+        #region Public member methods.
+
+        /// <summary>
+        ///  Function to generate unique token with expiry against the provided userId.
+        ///  Also add a record in database for generated token.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public TokenEntity GenerateToken(int userId)
+        {
+            string token = Guid.NewGuid().ToString();
+            DateTime issuedOn = DateTime.Now;
+            DateTime expiredOn = DateTime.Now.AddSeconds(
+                                              Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
+            string msgError = "";
+            WsBonusInsertarToken.wsinstokenSoapPortClient ws = new WsBonusInsertarToken.wsinstokenSoapPortClient();
+            short respuesta = ws.Execute(userId.ToString(), token, issuedOn, expiredOn, out msgError);
+
+            var tokenModel = new TokenEntity()
+            {
+                UserId = userId,
+                IssuedOn = issuedOn,
+                ExpiresOn = expiredOn,
+                AuthToken = token
+            };
+
+            return tokenModel;
+        }
+
+        /// <summary>
+        /// Method to validate token against expiry and existence in database.
+        /// </summary>
+        /// <param name="tokenId"></param>
+        /// <returns></returns>
+        public bool ValidateToken(string tokenId)
+        {
+            WsBonusObtenerToken.wsobttokenSoapPortClient ws = new WsBonusObtenerToken.wsobttokenSoapPortClient();
+            WsBonusActualizarToken.wsacttokenSoapPortClient wsActualizar = new WsBonusActualizarToken.wsacttokenSoapPortClient();
+            TokenEntity token = new TokenEntity();
+            string userId, msgError;
+            int _tokenID;
+            DateTime issuedOn;
+            DateTime expiredOn;
+
+            short respuesta = ws.Execute(tokenId, DateTime.Now, out msgError, out _tokenID, out userId, out issuedOn, out expiredOn);
+            TokenEntity tokenEntity = new TokenEntity();
+            tokenEntity.TokenId = _tokenID;
+            tokenEntity.UserId = int.Parse(userId);
+            tokenEntity.IssuedOn = issuedOn;
+            tokenEntity.ExpiresOn = expiredOn;
+
+            if (tokenEntity != null && !(DateTime.Now > tokenEntity.ExpiresOn))
+            {
+                tokenEntity.ExpiresOn = tokenEntity.ExpiresOn.AddSeconds(
+                                              Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
+                short respuestaActualizar = wsActualizar.Execute(tokenEntity.AuthToken, tokenEntity.ExpiresOn, out msgError);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Method to kill the provided token id.
+        /// </summary>
+        /// <param name="tokenId">true for successful delete</param>
+        public bool Kill(string tokenId)
+        {
+            WsBonusEliminarToken.wselitokenSoapPortClient ws = new WsBonusEliminarToken.wselitokenSoapPortClient();
+            string msgError;
+            ws.Execute(tokenId, out msgError);
+
+            var isNotDeleted = true; // _unitOfWork.TokenRepository.GetMany(x => x.AuthToken == tokenId).Any();
+            if (isNotDeleted) { return false; }
+            return true;
+        }
+
+        /// <summary>
+        /// Delete tokens for the specific deleted user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true for successful delete</returns>
+        public bool DeleteByUserId(int userId)
+        {
+            WsBonusEliminarTokenPorUsuario.wselitokusSoapPortClient ws = new WsBonusEliminarTokenPorUsuario.wselitokusSoapPortClient();
+            string msgError;
+            ws.Execute(userId.ToString(), out msgError);
+            /*_unitOfWork.TokenRepository.Delete(x => x.UserId == userId);
+            _unitOfWork.Save();*/
+
+            var isNotDeleted = true;// _unitOfWork.TokenRepository.GetMany(x => x.UserId == userId).Any();
+            return !isNotDeleted;
+        }
+
+        #endregion
+    }
+}

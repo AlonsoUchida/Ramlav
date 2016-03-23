@@ -1,0 +1,15 @@
+﻿public class FotosOperaciones 
+{ 
+    public string DigId;
+    public string OrdenAno;
+    public string OrdenNum;
+    public string DigDesc;
+}
+
+
+public class FotosOperacionesFinal
+{
+    public string Id;
+    public string Url;
+    public string Archivo;
+}

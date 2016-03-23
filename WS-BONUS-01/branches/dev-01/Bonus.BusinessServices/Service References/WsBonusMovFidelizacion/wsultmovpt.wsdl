@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="AppBonus" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlns="AppBonus" xmlns:tns1="AppBonus" name="wsultmovpt" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:complexType name="UltMovPto">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="UltMovPto.UltMovPtoItem" type="tns1:UltMovPto.UltMovPtoItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UltMovPto.UltMovPtoItem">
+        <xsd:all>
+          <xsd:element name="FchHor" type="xsd:string" />
+          <xsd:element name="HorProc" type="xsd:string" />
+          <xsd:element name="FchProc" type="xsd:string" />
+          <xsd:element name="FchAsig" type="xsd:string" />
+          <xsd:element name="Descrip" type="xsd:string" />
+          <xsd:element name="PtosAsig" type="xsd:double" />
+          <xsd:element name="PtosCanj" type="xsd:double" />
+          <xsd:element name="EsCanje" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="wsultmovpt.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Ctaprscod" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Ctacod" type="xsd:short" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wsultmovpt.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Coderror" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Msjerror" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Nrotrn" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Transaccion" type="tns1:UltMovPto" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wsultmovpt.ExecuteSoapIn">
+    <part name="parameters" element="tns1:wsultmovpt.Execute" />
+  </message>
+  <message name="wsultmovpt.ExecuteSoapOut">
+    <part name="parameters" element="tns1:wsultmovpt.ExecuteResponse" />
+  </message>
+  <portType name="wsultmovptSoapPort">
+    <operation name="Execute">
+      <input message="tns1:wsultmovpt.ExecuteSoapIn" />
+      <output message="tns1:wsultmovpt.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wsultmovptSoapBinding" type="tns1:wsultmovptSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSULTMOVPT.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wsultmovpt">
+    <port name="wsultmovptSoapPort" binding="tns1:wsultmovptSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awsultmovpt" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="AppBonus" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlns="AppBonus" xmlns:tns1="AppBonus" name="wslistipdo" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:complexType name="Listipdoc">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Listipdoc.ListipdocItem" type="tns1:Listipdoc.ListipdocItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Listipdoc.ListipdocItem">
+        <xsd:all>
+          <xsd:element name="TipDocCod" type="xsd:short" />
+          <xsd:element name="TipDocNom" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="wslistipdo.Execute">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wslistipdo.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Lista" type="tns1:Listipdoc" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wslistipdo.ExecuteSoapIn">
+    <part name="parameters" element="tns1:wslistipdo.Execute" />
+  </message>
+  <message name="wslistipdo.ExecuteSoapOut">
+    <part name="parameters" element="tns1:wslistipdo.ExecuteResponse" />
+  </message>
+  <portType name="wslistipdoSoapPort">
+    <operation name="Execute">
+      <input message="tns1:wslistipdo.ExecuteSoapIn" />
+      <output message="tns1:wslistipdo.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wslistipdoSoapBinding" type="tns1:wslistipdoSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSLISTIPDO.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wslistipdo">
+    <port name="wslistipdoSoapPort" binding="tns1:wslistipdoSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awslistipdo" />
+    </port>
+  </service>
+</definitions>

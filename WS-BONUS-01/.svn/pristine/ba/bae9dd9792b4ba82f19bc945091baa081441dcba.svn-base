@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="wslogusugxSoapBinding" />
+                <binding name="wslistipdoSoapBinding" />
+                <binding name="wslisdisSoapBinding" />
+                <binding name="wslisproSoapBinding" />
+                <binding name="wslisdepSoapBinding" />
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://200.62.147.188:8080/app/servlet/awslogusugx"
+                binding="basicHttpBinding" bindingConfiguration="wslogusugxSoapBinding"
+                contract="WsBonusLogin.wslogusugxSoapPort" name="wslogusugxSoapPort" />
+            <endpoint address="http://200.62.147.188:8080/app/servlet/awslistipdo"
+                binding="basicHttpBinding" bindingConfiguration="wslistipdoSoapBinding"
+                contract="WsBonusDocumentos.wslistipdoSoapPort" name="wslistipdoSoapPort" />
+            <endpoint address="http://200.62.147.188:8080/app/servlet/awslisdis"
+                binding="basicHttpBinding" bindingConfiguration="wslisdisSoapBinding"
+                contract="WsBonusDistritos.wslisdisSoapPort" name="wslisdisSoapPort" />
+            <endpoint address="http://200.62.147.188:8080/app/servlet/awslispro"
+                binding="basicHttpBinding" bindingConfiguration="wslisproSoapBinding"
+                contract="WsBonusProvincias.wslisproSoapPort" name="wslisproSoapPort" />
+            <endpoint address="http://200.62.147.188:8080/app/servlet/awslisdep"
+                binding="basicHttpBinding" bindingConfiguration="wslisdepSoapBinding"
+                contract="WsBonusDepartamentos.wslisdepSoapPort" name="wslisdepSoapPort" />
+        </client>
+    </system.serviceModel>
+</configuration>

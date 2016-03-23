@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="AppBonus" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlns="AppBonus" xmlns:tns1="AppBonus" name="wsdevdatco" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:complexType name="Lismai">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Lismai.LismaiItem" type="tns1:Lismai.LismaiItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Lismai.LismaiItem">
+        <xsd:all>
+          <xsd:element name="PrsMaiCod" type="xsd:byte" />
+          <xsd:element name="PrsMai" type="xsd:string" />
+          <xsd:element name="PrsFlgMErr" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Listel">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Listel.ListelItem" type="tns1:Listel.ListelItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Listel.ListelItem">
+        <xsd:all>
+          <xsd:element name="PrsTlfCod" type="xsd:byte" />
+          <xsd:element name="PrsPreTlf" type="xsd:int" />
+          <xsd:element name="PrsNroTlf" type="xsd:long" />
+          <xsd:element name="PrsAnxTlf" type="xsd:int" />
+          <xsd:element name="PrsFlgMov" type="xsd:byte" />
+          <xsd:element name="TlfRefCod" type="xsd:byte" />
+          <xsd:element name="OtfCod" type="xsd:short" />
+          <xsd:element name="PrsRedPrv" type="xsd:string" />
+          <xsd:element name="PrsFlgTErr" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Lishij">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Lishij.LishijItem" type="tns1:Lishij.LishijItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Lishij.LishijItem">
+        <xsd:all>
+          <xsd:element name="PrsHijEda" type="xsd:short" />
+          <xsd:element name="PrsHijSex" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:element name="wsdevdatco.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prscod" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wsdevdatco.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Coderror" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Msjerror" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prsapepat" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prsapemat" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prsprinom" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prssegnom" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prsternom" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Tipdoccod" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prsnrodoc" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Prssex" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Oprsfecnac" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Texto1" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Texto2" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Texto3" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Texto4" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Texto5" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Carritoco" type="tns1:Lismai" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Carritote" type="tns1:Listel" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Direccion" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Referencia" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Dptocod" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Provcod" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Distcod" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Flgtieveh" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Flgtiehij" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Carritohij" type="tns1:Lishij" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wsdevdatco.ExecuteSoapIn">
+    <part name="parameters" element="tns1:wsdevdatco.Execute" />
+  </message>
+  <message name="wsdevdatco.ExecuteSoapOut">
+    <part name="parameters" element="tns1:wsdevdatco.ExecuteResponse" />
+  </message>
+  <portType name="wsdevdatcoSoapPort">
+    <operation name="Execute">
+      <input message="tns1:wsdevdatco.ExecuteSoapIn" />
+      <output message="tns1:wsdevdatco.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wsdevdatcoSoapBinding" type="tns1:wsdevdatcoSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSDEVDATCO.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wsdevdatco">
+    <port name="wsdevdatcoSoapPort" binding="tns1:wsdevdatcoSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awsdevdatco" />
+    </port>
+  </service>
+</definitions>

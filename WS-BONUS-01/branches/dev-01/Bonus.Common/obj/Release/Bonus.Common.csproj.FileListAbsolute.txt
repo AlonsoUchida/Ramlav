@@ -1,0 +1,5 @@
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Release\Bonus.Common.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\bin\Release\Bonus.Common.pdb
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Release\Bonus.Common.csprojResolveAssemblyReference.cache
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Release\Bonus.Common.dll
+F:\Proyectos\Valmar\WS-BONUS-01\branches\dev-01\Bonus.Common\obj\Release\Bonus.Common.pdb

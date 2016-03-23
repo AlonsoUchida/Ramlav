@@ -1,0 +1,16 @@
+﻿namespace Bonus.BusinessServices.Interfaces
+{
+    public interface ILoginServices
+    {
+        #region Interface member methods.
+        /// <summary>
+        ///  Funcion que autentifica el usuario y password 
+        ///  para el login contra el servicio de Bonus.
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        int Login(string usuario, string password);
+        #endregion
+    }
+}

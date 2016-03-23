@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace MvcAppRest.Controllers
+{
+    public class AlertasController : Controller
+    {
+        //
+        // GET: /Alertas/
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult AlertaListar(string usuario, string fechaInicio, string fechaFin, string bitEliminado)
+        {
+            DataTable dt = new DataTable();
+            ActionResult resultado = null;
+            try
+            {
+                int usr_int_id = int.Parse(usuario);
+                DateTime ale_dat_inicio = DateTime.Parse(fechaInicio);
+                DateTime ale_dar_fin = DateTime.Parse(fechaFin);  
+                int ale_bit_eliminado = int.Parse(bitEliminado);
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AUSACnn"].ToString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("PA_ALERTA_LISTAR", con))
+                    {
+                        con.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        cmd.Parameters.AddWithValue("usr_int_id", usr_int_id);
+                        cmd.Parameters.AddWithValue("ale_dat_inicio", ale_dat_inicio);
+                        cmd.Parameters.AddWithValue("ale_dar_fin", ale_dar_fin);
+                        cmd.Parameters.AddWithValue("ale_bit_eliminado", ale_bit_eliminado);
+                        da.Fill(dt);
+
+                        List<Alerta> _alertas = Helper.DataTableToList<Alerta>(dt);
+                        resultado = Json(_alertas, JsonRequestBehavior.AllowGet);
+                        return resultado;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = Json(Helper.obtenerConfirmacion(ex.Message), JsonRequestBehavior.AllowGet); 
+                return resultado;
+            }
+
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult AlertaListarDetalle(string usuario, string fechaInicio, string fechaFin, string bitEliminado, string bitId)
+        {
+            DataTable dt = new DataTable();
+            ActionResult resultado = null;
+            try
+            {
+                int usr_int_id = int.Parse(usuario);
+                DateTime ale_dat_inicio = DateTime.Parse(fechaInicio);
+                DateTime ale_dar_fin = DateTime.Parse(fechaFin);
+                int ale_bit_eliminado = int.Parse(bitEliminado);
+                int ale_int_id = int.Parse(bitId);
+
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["AUSACnn"].ToString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("PA_ALERTA_LISTAR_DETALLE", con))
+                    {
+                        con.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        cmd.Parameters.AddWithValue("usr_int_id", usr_int_id);
+                        cmd.Parameters.AddWithValue("ale_dat_inicio", ale_dat_inicio);
+                        cmd.Parameters.AddWithValue("ale_dar_fin", ale_dar_fin);
+                        cmd.Parameters.AddWithValue("ale_bit_eliminado", ale_bit_eliminado);
+                        cmd.Parameters.AddWithValue("ale_int_id", ale_int_id);
+                        da.Fill(dt);
+
+                        List<AlertaDetalle> _alertasDetalle = Helper.DataTableToList<AlertaDetalle>(dt);
+                        resultado = Json(_alertasDetalle, JsonRequestBehavior.AllowGet);
+                        return resultado;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = Json(Helper.obtenerConfirmacion(ex.Message), JsonRequestBehavior.AllowGet); 
+                return resultado;
+            }
+
+        }
+    }
+}

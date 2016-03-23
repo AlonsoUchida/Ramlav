@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="AppBonus" xmlns:wsdlns="AppBonus" name="wslogusugx" targetNamespace="AppBonus" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="AppBonus">
+      <xsd:element name="wslogusugx.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Usucod" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Usucla" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wslogusugx.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Coderror" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Msjerror" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wslogusugx.ExecuteSoapIn">
+    <part name="parameters" element="wsdlns:wslogusugx.Execute" />
+  </message>
+  <message name="wslogusugx.ExecuteSoapOut">
+    <part name="parameters" element="wsdlns:wslogusugx.ExecuteResponse" />
+  </message>
+  <portType name="wslogusugxSoapPort">
+    <operation name="Execute">
+      <input message="wsdlns:wslogusugx.ExecuteSoapIn" />
+      <output message="wsdlns:wslogusugx.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wslogusugxSoapBinding" type="wsdlns:wslogusugxSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="AppBonusaction/AWSLOGUSUGX.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wslogusugx">
+    <port name="wslogusugxSoapPort" binding="wsdlns:wslogusugxSoapBinding">
+      <soap:address location="http://200.62.147.188:8080/app/servlet/awslogusugx" />
+    </port>
+  </service>
+</definitions>

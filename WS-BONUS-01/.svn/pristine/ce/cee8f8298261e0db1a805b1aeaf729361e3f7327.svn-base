@@ -1,0 +1,198 @@
+﻿using Bonus.BusinessServices.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Bonus.BusinessEntities.DTO;
+
+namespace Bonus.BusinessServices.Providers
+{
+    public class ClienteServices : IClienteServices
+    {
+        public string ExisteCliente(short tipodoccod, string prsnrodoc)
+        {
+            WsBonusExisteClienteBonus.wsexicliboSoapPortClient ws = new WsBonusExisteClienteBonus.wsexicliboSoapPortClient();
+
+            string msgError = "";
+            string prsCod;
+
+            /*
+                0: Éxito
+                1: Código de tipo de documento nulo
+                2: Número de documento nulo
+                3: Tipo y número de documento no encontrado
+                4: Código de persona nula
+                5: No existe cliente bonus
+            */
+            int respuesta = ws.Execute(tipodoccod, prsnrodoc, out msgError, out prsCod);
+            if (respuesta == 0)
+            {
+                return prsCod;
+            }
+            return null;
+        }
+
+        public ClienteEntity ObtenerCliente(string prsCod)
+        {
+           WsBonusObtenerDatosClientes.wsdevdatcoSoapPortClient ws = new WsBonusObtenerDatosClientes.wsdevdatcoSoapPortClient();
+
+           string msgError = "";
+           ClienteEntity cliente = new ClienteEntity();
+           WsBonusObtenerDatosClientes.ListelListelItem[] carritoTe;
+           WsBonusObtenerDatosClientes.LismaiLismaiItem[] carritoCo;
+           WsBonusObtenerDatosClientes.LishijLishijItem[] carritoHij;
+
+           string PrsApePat, PrsApeMat, PrsPriNom, PrsSegNom, PrsTerNom, PrsNroDoc, PrsSex, Texto1, Texto2, Texto3, Texto4, Texto5, Direccion;
+           short TipDocCod;
+           string PrsFecNac, Referencia, DptoCod, ProvCod, DistCod, FlgTieVeh, FlgTieHij;
+
+           int respuesta = ws.Execute(prsCod, out msgError, out PrsApePat, out PrsApeMat, out PrsPriNom, out PrsSegNom, out PrsTerNom,
+               out TipDocCod, out PrsNroDoc, out PrsSex, out PrsFecNac, out Texto1, out Texto2, out Texto3, out Texto4,
+               out Texto5, out carritoCo, out carritoTe, out Direccion, out Referencia, out DptoCod, out ProvCod, out DistCod, out FlgTieVeh,
+               out FlgTieHij, out carritoHij);
+
+            /*
+                0: Éxito
+                1: Código de persona nula
+                2: Código de persona no existe
+            */
+            if (respuesta == 0)
+            {
+                cliente.PrsApePat = PrsApePat;
+                cliente.PrsNroDoc = PrsNroDoc;
+                cliente.PrsApePat = PrsApePat;
+                cliente.PrsApeMat = PrsApeMat;
+                cliente.PrsPriNom = PrsPriNom;
+                cliente.PrsSegNom = PrsSegNom;
+                cliente.PrsTerNom = PrsTerNom;
+                cliente.TipDocCod = TipDocCod;
+                cliente.PrsSex = PrsSex;
+                cliente.PrsFecNac = PrsFecNac;
+                cliente.Texto1 = Texto1;
+                cliente.Texto2 = Texto2;
+                cliente.Texto3 = Texto3;
+                cliente.Texto4 = Texto4;
+                cliente.Texto5 = Texto5;
+                
+                List<CarritoCoEntity> _carritoCo = new List<CarritoCoEntity>();
+                foreach (var item in carritoCo)
+                {
+                    CarritoCoEntity carrito = new CarritoCoEntity();
+                    carrito.PrsMaiCod = item.PrsMaiCod.ToString();
+                    carrito.PrsMai = item.PrsMai;
+                    carrito.PrsFlgMErr = item.PrsFlgMErr;
+                    _carritoCo.Add(carrito);
+                }
+
+                cliente.carritosCo = _carritoCo;
+
+                List<CarritoTeEntity> _carritoTe = new List<CarritoTeEntity>();
+                foreach (var item in carritoTe)
+                {
+                    CarritoTeEntity carrito = new CarritoTeEntity();
+                    carrito.PrsAnxTlf = item.PrsAnxTlf;
+                    carrito.OtfCod = item.OtfCod;
+                    carrito.PrsFlgMov = item.PrsFlgMov.ToString();
+                    carrito.PrsFlgTErr = item.PrsFlgTErr;
+                    carrito.PrsNroTlf = item.PrsNroTlf.ToString();
+                    carrito.PrsPreTlf = item.PrsPreTlf;
+                    carrito.PrsRedPrv = item.PrsRedPrv;
+                    carrito.PrsTlfCod = item.PrsTlfCod.ToString();
+                    carrito.TlfRefCod = item.TlfRefCod;
+                    _carritoTe.Add(carrito);
+                }
+
+                cliente.carritosTe = _carritoTe;
+
+                cliente.Direccion = Direccion;
+                cliente.Referencia = Referencia;
+                cliente.DptoCod = DptoCod;
+                cliente.ProvCod = ProvCod;
+                cliente.DistCod = DistCod;
+                cliente.FlgTieVeh = FlgTieVeh;
+                cliente.FlgTieHij = FlgTieHij;
+
+                List<CarritoHij> _carritoHij = new List<CarritoHij>();
+                foreach (var item in carritoHij)
+                {
+                    CarritoHij carrito = new CarritoHij();
+                    carrito.PrsHijSex = item.PrsHijSex;
+                    carrito.PrsHijEda = item.PrsHijEda;
+                    _carritoHij.Add(carrito);
+                }
+                cliente.carritosHij = _carritoHij;
+            }
+            return cliente;
+        }
+
+        public IEnumerable<CuentaEntity> ObtenerCuentas(string ctaPrsCod)
+        {
+            WsBonusInfoCuenta.wslisctaptSoapPortClient ws = new WsBonusInfoCuenta.wslisctaptSoapPortClient();
+            WsBonusInfoCuenta.LisctaptoLisctaptoItem[] carritoCta;
+            List<CuentaEntity> cuentaEntity = new List<CuentaEntity>();
+            string msgError;
+            int respuesta = ws.Execute(ctaPrsCod, out msgError, out carritoCta);
+            /*
+                0: Éxito
+                1: Código de persona nula
+                2: Código de cuenta nula
+                3: Código de persona no existe
+            */
+            if (respuesta == 0)
+            {
+                
+                foreach (var item in carritoCta)
+                {
+                    CuentaEntity cuenta = new CuentaEntity();
+                    cuenta.CtaCod = item.CtaCod;
+                    cuenta.CtaAsoNom = item.CtaAsoNom;
+                    cuenta.CtaPrsCod = item.CtaPrsCod;
+                    cuenta.CtaPrsNom = item.CtaPrsNom;
+                    cuenta.CtaSalCon = item.CtaSalCon;
+                    cuenta.CtaSalDsp = item.CtaSalDsp;
+                    cuenta.CtaSalVig = item.CtaSalVig;
+                    cuentaEntity.Add(cuenta);
+                }
+            }
+            return cuentaEntity;
+
+        }
+
+        public MovFideEntity ObtenerMovFidelizacion(string ctaPrsCod, int ctaCod)
+        {
+            WsBonusMovFidelizacion.wsultmovptSoapPortClient ws = new WsBonusMovFidelizacion.wsultmovptSoapPortClient();
+            WsBonusMovFidelizacion.UltMovPtoUltMovPtoItem[] _movFid;
+            string msgError;
+            int nroTra;
+            int respuesta = ws.Execute(ctaPrsCod, Convert.ToInt16(ctaCod), out msgError, out nroTra, out _movFid);
+            MovFideEntity movFideEntity = new MovFideEntity();
+            /*
+            0: Éxito
+            1: Código de persona nula
+            2: Código de persona no existe
+
+            */
+            if (respuesta == 0)
+            {
+                movFideEntity.NroTrn = nroTra;
+                List<Transaccion> _transacciones = new List<Transaccion>();
+                foreach (var item in _movFid)
+                {
+                    Transaccion transaccion = new Transaccion();
+                    transaccion.Descrip = item.Descrip;
+                    transaccion.EsCanje = item.EsCanje;
+                    transaccion.FchAsig = item.FchAsig;
+                    transaccion.FchHor = item.FchHor;
+                    transaccion.FchProc = item.FchProc;
+                    transaccion.HorProc = item.HorProc;
+                    transaccion.PtosAsig = item.PtosAsig;
+                    transaccion.PtosCanj = item.PtosCanj;
+                    _transacciones.Add(transaccion);
+                }
+                movFideEntity.Transacciones = _transacciones;
+            }
+            return movFideEntity;
+        }
+    }
+}
